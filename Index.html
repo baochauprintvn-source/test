@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiệp cưới</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+* {margin:0;padding:0;box-sizing:border-box;}
+body {
+  font-family:'Montserrat',sans-serif;
+  background:#000;color:#fff;overflow-x:hidden;
+}
+
+/* HERO */
+.hero {height:100vh;position:relative;}
+.hero img {
+  width:100%;height:100%;object-fit:cover;
+  animation:zoom 15s ease-in-out infinite alternate;
+}
+@keyframes zoom {
+  from{transform:scale(1);}
+  to{transform:scale(1.1);}
+}
+.overlay {
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.4);
+}
+.hero-text {
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+}
+.hero-text h1 {
+  font-family:'Playfair Display',serif;
+  font-size:38px;
+  opacity:0;
+  animation:fadeUp 2s ease forwards;
+}
+.hero-text p {
+  margin-top:10px;
+  opacity:0;
+  animation:fadeUp 2s ease forwards;
+}
+.hero-text p:nth-child(2){animation-delay:0.5s;}
+.hero-text p:nth-child(3){animation-delay:1s;}
+
+@keyframes fadeUp {
+  from {opacity:0;transform:translateY(30px);}
+  to {opacity:1;transform:translateY(0);}
+}
+
+/* SECTION */
+.section {
+  padding:60px 20px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+.section.show {
+  opacity:1;
+  transform:translateY(0);
+}
+
+h2 {
+  font-family:'Playfair Display',serif;
+  margin-bottom:20px;
+}
+
+/* GALLERY */
+.gallery img {
+  width:100%;
+  border-radius:10px;
+  margin-bottom:15px;
+  transition:0.4s;
+}
+.gallery img:hover {
+  transform:scale(1.05);
+}
+
+/* MAP */
+.map iframe {
+  width:100%;
+  height:300px;
+  border:0;
+  border-radius:10px;
+}
+
+/* FORM */
+input, textarea {
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:5px;
+}
+button {
+  padding:12px 20px;
+  border:none;
+  background:#fff;
+  color:#000;
+  cursor:pointer;
+}
+
+/* MUSIC BUTTON */
+.music-btn {
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#fff;
+  color:#000;
+  padding:10px 12px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .hero-text h1 {font-size:26px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+<div class="music-btn" onclick="toggleMusic()">♪</div>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="hero.jpg">
+  <div class="overlay"></div>
+  <div class="hero-text">
+    <h1>Thúy & Hòa</h1>
+    <p>Save The Date</p>
+    <p>20.10.2026</p>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="section">
+  <h2>Câu chuyện</h2>
+  <p>Chúng tôi đã gặp nhau trong một ngày rất bình thường...</p>
+</div>
+
+<!-- GALLERY -->
+<div class="section gallery">
+  <img src="1.jpg">
+  <img src="2.jpg">
+</div>
+
+<!-- EVENT -->
+<div class="section">
+  <h2>Lễ đớp</h2>
+  <p>17:00 - 26.04.2026</p>
+  <p>Nhà hàng cây Sung, Tân Triều, Hà Nội</p>
+</div>
+
+<!-- MAP -->
+<div class="section map">
+  <h2>Bản đồ</h2>
+  <iframe 
+    src="https://www.google.com/maps?q=Hanoi&output=embed">
+  </iframe>
+</div>
+
+<!-- RSVP -->
+<div class="section">
+  <h2>Xác nhận tham dự</h2>
+  <form onsubmit="sendForm(event)">
+    <input type="text" placeholder="Tên của bạn" required>
+    <input type="number" placeholder="Số người tham dự">
+    <textarea placeholder="Lời nhắn"></textarea>
+    <button type="submit">Gửi</button>
+  </form>
+</div>
+
+<script>
+/* SCROLL EFFECT */
+const sections = document.querySelectorAll('.section');
+window.addEventListener('scroll', () => {
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      sec.classList.add('show');
+    }
+  });
+});
+
+/* MUSIC */
+const music = document.getElementById("music");
+function toggleMusic(){
+  if(music.paused){
+    music.play();
+  } else {
+    music.pause();
+  }
+}
+
+/* AUTO PLAY (mobile cần click trước) */
+window.addEventListener('click', () => {
+  music.play();
+}, { once:true });
+
+/* FORM */
+function sendForm(e){
+  e.preventDefault();
+  alert("Cảm ơn bạn đã xác nhận!");
+}
+</script>
+
+</body>
+</html>
